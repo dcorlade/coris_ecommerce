@@ -18,6 +18,7 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useNavigate } from 'react-router-dom'
+import { alpha } from '@mui/system'
 import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
 
@@ -51,10 +52,17 @@ const Cart = () => {
         </Paper>
       ) : (
         <>
-          <TableContainer component={Paper}>
+          <TableContainer
+            component={Paper}
+            sx={{
+              borderRadius: 2,
+              boxShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.1)}`,
+              overflow: 'hidden'
+            }}>
             <Table>
               <TableHead>
-                <TableRow>
+                <TableRow
+                  sx={{ backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.05) }}>
                   <TableCell>Product</TableCell>
                   <TableCell align="right">Price</TableCell>
                   <TableCell align="right">Quantity</TableCell>
