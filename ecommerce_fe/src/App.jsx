@@ -5,16 +5,17 @@ import AuthForm from './components/AuthForm'
 import { notify } from './reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeLoggedUser, loginUser, logoutUser } from './reducers/loggedUserReducer'
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { initializeUsers } from './reducers/usersReducer'
-import { AppBar, Button, Grid2, Toolbar } from '@mui/material'
+import { Box } from '@mui/material'
 import ProductList from './components/ProductList'
 import { initializeProducts } from './reducers/productReducer'
 import Product from './components/Product'
 import AddProductForm from './components/AddProductForm'
 import EditProductForm from './components/EditProductForm'
 import Cart from './components/Cart'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import Footer from './components/Footer'
+import Header from './components/Header'
 
 const App = () => {
   const user = useSelector(({ loggedUser }) => loggedUser)
@@ -55,17 +56,6 @@ const App = () => {
     </div>
   )
 
-  const logoutForm = () => (
-    <div>
-      <form onSubmit={handleLogout} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-        <p>{user.name} logged in</p>
-        <Button color="inherit" type="submit">
-          logout
-        </Button>
-      </form>
-    </div>
-  )
-
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -96,40 +86,34 @@ const App = () => {
 
   return (
     <Router>
-      <AppBar position="static">
-        <Toolbar>
-          <Button color="inherit" component={Link} to="/">
-            Products
-          </Button>
-          {user && (
-            <Grid2 display="flex" justifyContent={'center'} alignItems={'center'}>
-              <Button color="inherit" component={Link} to="/cart">
-                Cart
-                <ShoppingCartIcon sx={{ marginLeft: '5px', marginRight: '2px' }} />({cart.length})
-              </Button>
-            </Grid2>
-          )}
-          <div style={{ marginLeft: 'auto' }}>{user && logoutForm()}</div>
-        </Toolbar>
-      </AppBar>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh'
+        }}>
+        <Header user={user} cart={cart} handleLogout={handleLogout} />
 
-      <Notification />
+        <Box sx={{ flex: 1, py: 3 }}>
+          <Notification />
 
-      <Routes>
-        <Route path="/" element={user ? <ProductList /> : loginForm()} />
-        <Route
-          path="add-product"
-          element={user?.role === 'admin' ? <AddProductForm /> : <Navigate to="/" />}
-        />
-        <Route
-          path="edit-product/:id"
-          element={user?.role === 'admin' ? <EditProductForm /> : <Navigate to="/" />}
-        />
+          <Routes>
+            <Route path="/" element={user ? <ProductList /> : loginForm()} />
+            <Route
+              path="add-product"
+              element={user?.role === 'admin' ? <AddProductForm /> : <Navigate to="/" />}
+            />
+            <Route
+              path="edit-product/:id"
+              element={user?.role === 'admin' ? <EditProductForm /> : <Navigate to="/" />}
+            />
+            <Route path="/cart" element={user ? <Cart /> : <Navigate to="/" />} />
+            <Route path="/products/:id" element={<Product />} />
+          </Routes>
+        </Box>
 
-        <Route path="/cart" element={user ? <Cart /> : <Navigate to="/" />} />
-
-        <Route path="/products/:id" element={<Product />} />
-      </Routes>
+        <Footer />
+      </Box>
     </Router>
   )
 }

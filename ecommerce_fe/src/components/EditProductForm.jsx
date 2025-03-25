@@ -17,7 +17,7 @@ const EditProductForm = () => {
       dispatch(notify('Product updated successfully!'))
       navigate(`/products/${id}`)
     } catch (error) {
-      console.err('Failed to update product', error.message)
+      console.error('Failed to update product', error.message)
       dispatch(notify('Failed to update product', 5000))
     }
   }

@@ -5,13 +5,13 @@ import { Button, TextField, Container, Typography, Box } from '@mui/material'
 const ProductForm = ({ product, onSubmit, formTitle }) => {
   const navigate = useNavigate()
   const [productData, setProductData] = useState({
-    provider: product.provider || '',
-    title: product.title || '',
-    description: product.description || '',
-    price: product.price || '',
-    stock: product.stock || '',
-    category: product.category || '',
-    imageUrl: product.imageUrl || ''
+    provider: product?.provider || '',
+    title: product?.title || '',
+    description: product?.description || '',
+    price: product?.price || '',
+    stock: product?.stock || '',
+    category: product?.category || '',
+    imageUrl: product?.imageUrl || ''
   })
 
   const handleChange = (event) => {

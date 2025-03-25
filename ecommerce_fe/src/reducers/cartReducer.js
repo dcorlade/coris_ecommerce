@@ -11,9 +11,8 @@ const cartReducer = createSlice({
     appendToCart(state, action) {
       const id = action.payload.product.id
 
-      const existingItem = state.find((item) => {
-        item.product.id === id
-      })
+      const existingItem = state.find((item) => item.product.id === id)
+
       if (existingItem) {
         return state.map((item) =>
           item.product.id === id

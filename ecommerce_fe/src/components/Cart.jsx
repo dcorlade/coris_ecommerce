@@ -34,7 +34,7 @@ const Cart = () => {
     dispatch(updateQuantity({ productId, quantity: newQuantity }))
   }
 
-  const roundNumberToDecimals = (number, decimalsLen) => {
+  const roundNumberToDecimals = (number, decimalsLen = 2) => {
     return parseFloat(number).toFixed(decimalsLen)
   }
 
@@ -77,14 +77,16 @@ const Cart = () => {
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Box
                           component="img"
-                          src={item.product.imageUrl || 'https://picsum.photos/seed/picsum/800'}
+                          src={item.product.imageUrl}
                           alt={item.product.title}
                           sx={{ width: 50, height: 50, marginRight: 2, objectFit: 'cover' }}
                         />
                         <Typography>{item.product.title}</Typography>
                       </Box>
                     </TableCell>
-                    <TableCell align="right">{item.product.price} RON</TableCell>
+                    <TableCell align="right">
+                      {roundNumberToDecimals(item.product.price)} RON
+                    </TableCell>
                     <TableCell align="right">
                       <ButtonGroup size="small" sx={{ marginRight: -4 }}>
                         <IconButton

@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import { notify } from '../reducers/notificationReducer'
 import { deleteProduct } from '../reducers/productReducer'
+import QuantityField from './QuantityField'
 
 const Product = () => {
   const { id } = useParams()
@@ -30,11 +31,11 @@ const Product = () => {
 
     try {
       dispatch(deleteProduct(id))
-      dispatch(notify('Deleted product successfully', 5000))
+      dispatch(notify('Product deleted successfully', 'success', 5000))
       navigate('/')
     } catch (err) {
       console.error('Failed to delete the product', err.message)
-      dispatch(notify('Failed to delete the product', 5000))
+      dispatch(notify('Failed to delete the product', 'err', 5000))
     }
   }
 
@@ -94,38 +95,53 @@ const Product = () => {
                 sx={{
                   p: 4,
                   border: '1px solid #e0e0e0',
-                  borderRadius: 1
+                  borderRadius: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center'
                 }}>
-                <Typography variant="h6" gutterBottom>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{
+                    mb: 2,
+                    width: '100%'
+                  }}>
                   Price: {product.price} RON
                 </Typography>
-                <Typography color={product.stock > 0 ? 'success.main' : 'error.main'} gutterBottom>
-                  {user?.role === 'admin' ? `In Stock (${product.stock})` : 'Out of Stock'}
+                <Typography
+                  color={product.stock > 0 ? 'success.main' : 'error.main'}
+                  gutterBottom
+                  sx={{ width: '100%' }}>
+                  {' '}
+                  {user?.role === 'admin' && `In Stock (${product.stock})`}
                 </Typography>
                 {user?.role !== 'admin' && product.stock > 0 && (
-                  <Button variant="contained" color="primary" fullWidth>
-                    Add to Cart
-                  </Button>
+                  <Box sx={{ width: '100%' }}>
+                    {' '}
+                    <QuantityField product={product} vertical={true} />
+                  </Box>
                 )}
                 {user?.role === 'admin' && (
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                    sx={{ mt: 1 }}
-                    onClick={() => navigate(`/edit-product/${product.id}`)}>
-                    Edit Product
-                  </Button>
-                )}
-                {user?.role === 'admin' && (
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    fullWidth
-                    sx={{ mt: 1 }}
-                    onClick={removeProduct}>
-                    Delete Product
-                  </Button>
+                  <>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      fullWidth
+                      sx={{ mt: 1 }}
+                      onClick={() => navigate(`/edit-product/${product.id}`)}>
+                      Edit Product
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      fullWidth
+                      sx={{ mt: 1 }}
+                      onClick={removeProduct}>
+                      Delete Product
+                    </Button>
+                  </>
                 )}
               </Box>
             </Grid>
