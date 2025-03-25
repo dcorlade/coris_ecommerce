@@ -30,7 +30,6 @@ export const initializeProducts = () => {
 }
 
 export const createProduct = (product) => {
-  console.log('creating product...  ', product)
   return async (dispatch) => {
     const newProduct = await productService.create(product)
     dispatch(appendProduct(newProduct))
@@ -38,7 +37,6 @@ export const createProduct = (product) => {
 }
 
 export const editProduct = (id, product) => {
-  console.log('updating product...')
   return async (dispatch) => {
     const updatedProduct = await productService.update(id, product)
     dispatch(updateProduct(updatedProduct))
@@ -46,7 +44,6 @@ export const editProduct = (id, product) => {
 }
 
 export const deleteProduct = (id) => {
-  console.log('deleting product...')
   return async (dispatch) => {
     await productService.remove(id)
     dispatch(removeProduct(id))

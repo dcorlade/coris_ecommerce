@@ -33,6 +33,7 @@ const Product = () => {
       dispatch(notify('Deleted product successfully', 5000))
       navigate('/')
     } catch (err) {
+      console.error('Failed to delete the product', err.message)
       dispatch(notify('Failed to delete the product', 5000))
     }
   }
@@ -80,7 +81,7 @@ const Product = () => {
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover'
+                    objectFit: 'contain'
                   }}
                 />
               </Box>
@@ -99,7 +100,7 @@ const Product = () => {
                   Price: {product.price} RON
                 </Typography>
                 <Typography color={product.stock > 0 ? 'success.main' : 'error.main'} gutterBottom>
-                  {product.stock > 0 ? `In Stock (${product.stock})` : 'Out of Stock'}
+                  {user?.role === 'admin' ? `In Stock (${product.stock})` : 'Out of Stock'}
                 </Typography>
                 {user?.role !== 'admin' && product.stock > 0 && (
                   <Button variant="contained" color="primary" fullWidth>

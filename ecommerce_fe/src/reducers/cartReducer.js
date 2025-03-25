@@ -42,7 +42,6 @@ const cartReducer = createSlice({
 export const addToCart = (product, quantity) => {
   return (dispatch) => {
     const itemToAdd = { product, quantity }
-    console.log('quantity ' + quantity)
     dispatch(appendToCart(itemToAdd))
     dispatch(notify('Product was added to cart!'))
   }

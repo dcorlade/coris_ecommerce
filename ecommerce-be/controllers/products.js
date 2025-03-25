@@ -31,11 +31,10 @@ productsRouter.post('/', userExtractor, adminRequired, async (request, response)
 })
 
 productsRouter.put('/:id', userExtractor, adminRequired, async (request, response) => {
-  const { provider, title, description, price, stock, category } = request.body
 
   const updatedProduct = await Product.findByIdAndUpdate(
     request.params.id,
-    { provider, title, description, price, stock, category },
+    { ...request.body },
     { new: true, runValidators: true }
   )
 

@@ -3,8 +3,19 @@ import PropTypes from 'prop-types'
 
 const AuthForm = ({ handleSubmit, handleChange, values }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <div style={{ marginBottom: 7 }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: 'flex',
+        marginBottom: 7,
+        height: '100%',
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column'
+      }}>
+      <h2>Log in to the application</h2>
+      <div>
         <TextField
           name="Username"
           label="username"

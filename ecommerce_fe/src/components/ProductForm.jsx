@@ -1,32 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, TextField, Container, Typography, Box } from '@mui/material'
 
 const ProductForm = ({ product, onSubmit, formTitle }) => {
   const navigate = useNavigate()
   const [productData, setProductData] = useState({
-    provider: '',
-    title: '',
-    description: '',
-    price: '',
-    stock: '',
-    category: '',
-    imageUrl: ''
+    provider: product.provider || '',
+    title: product.title || '',
+    description: product.description || '',
+    price: product.price || '',
+    stock: product.stock || '',
+    category: product.category || '',
+    imageUrl: product.imageUrl || ''
   })
-
-  useEffect(() => {
-    if (product) {
-      setProductData({
-        provider: product.provider || '',
-        title: product.title || '',
-        description: product.description || '',
-        price: product.price || '',
-        stock: product.stock || '',
-        category: product.category || '',
-        imageUrl: product.imageUrl || ''
-      })
-    }
-  }, [product])
 
   const handleChange = (event) => {
     const { name, value } = event.target

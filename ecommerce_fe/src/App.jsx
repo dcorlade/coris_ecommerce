@@ -47,7 +47,6 @@ const App = () => {
 
   const loginForm = () => (
     <div>
-      <h2>Log in to the application</h2>
       <AuthForm
         handleSubmit={handleLogin}
         handleChange={handleChange}
@@ -76,7 +75,7 @@ const App = () => {
       setPassword('')
       dispatch(notify('Logged in successfully', 'success', 5000))
     } catch (err) {
-      console.log(err)
+      console.error('Logged in unsuccessfully', err.message)
       dispatch(notify('Failed to login: incorrect username or password', 'err', 5000))
     }
   }
@@ -90,7 +89,7 @@ const App = () => {
       setPassword('')
       dispatch(notify('Logged out successfully', 'success', 5000))
     } catch (err) {
-      console.log(err)
+      console.error('Log out unsuccessful', err.message)
       dispatch(notify('Failed to logout', 'err', 5000))
     }
   }

@@ -14,6 +14,7 @@ const AddProductForm = () => {
       dispatch(notify('Product was added successfully!'))
       navigate('/')
     } catch (error) {
+      console.error('Could not add new product', error.message)
       dispatch(notify('Failed to add new product', 5000))
     }
   }

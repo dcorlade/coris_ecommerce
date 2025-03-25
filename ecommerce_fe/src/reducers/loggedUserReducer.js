@@ -33,7 +33,6 @@ export const logoutUser = () => {
 }
 
 export const initializeLoggedUser = () => {
-  console.log('initiliasing logged user')
   return async (dispatch) => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {

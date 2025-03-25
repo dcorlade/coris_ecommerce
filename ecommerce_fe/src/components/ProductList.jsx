@@ -28,12 +28,10 @@ const ProductList = () => {
   const getQuantity = (productId) => quantities[productId] || 1
 
   const handleQuantityChange = (id, newQuantity) => {
-    if (newQuantity >= 1 && newQuantity <= 9999) {
-      setQuantities({
-        ...quantities,
-        [id]: newQuantity
-      })
-    }
+    setQuantities({
+      ...quantities,
+      [id]: newQuantity
+    })
   }
 
   const addProductToCart = (event, product) => {
@@ -47,7 +45,6 @@ const ProductList = () => {
       <Typography variant="h4" gutterBottom sx={{ mb: 4, textAlign: 'center' }}>
         Our Products
       </Typography>
-
       {user?.role === 'admin' && (
         <Button
           component={Link}
@@ -58,7 +55,6 @@ const ProductList = () => {
           <AddIcon /> Add New Product
         </Button>
       )}
-
       <Grid container spacing={3}>
         {products.map((product) => (
           <Grid size={4} key={product.id}>
@@ -78,9 +74,9 @@ const ProductList = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={product.image || 'https://picsum.photos/seed/picsum/800'}
+                image={product.imageUrl || 'https://picsum.photos/seed/picsum/800'}
                 alt={product.title}
-                sx={{ objectFit: 'cover' }}
+                sx={{ objectFit: 'contain' }}
               />
               <CardContent sx={{ flexGrow: 1, p: 3 }}>
                 <Typography variant="h6" component="div" sx={{ mb: 1 }}>
@@ -102,13 +98,7 @@ const ProductList = () => {
                   gap: 1,
                   justifyContent: 'space-between'
                 }}>
-                <ButtonGroup
-                  size="small"
-                  sx={{
-                    border: '1px solid',
-                    borderColor: 'divider',
-                    borderRadius: 1
-                  }}>
+                <ButtonGroup size="small">
                   <IconButton
                     onClick={() => handleQuantityChange(product.id, getQuantity(product.id) - 1)}
                     disabled={getQuantity(product.id) <= 1}>
@@ -117,27 +107,21 @@ const ProductList = () => {
                   <TextField
                     value={getQuantity(product.id)}
                     onChange={(e) => {
-                      const value = parseInt(e.target.value)
-                      if (!isNaN(value)) {
-                        handleQuantityChange(product.id, value)
-                      }
-                    }}
-                    onKeyPress={(e) => {
-                      if (!/[0-9]/.test(e.key)) {
-                        e.preventDefault()
-                      }
+                      handleQuantityChange(product.id, parseInt(e.target.value))
                     }}
                     sx={{
                       width: '50px',
                       '& .MuiInputBase-input': {
                         textAlign: 'center',
                         p: '4px'
-                      }
+                      },
+                      justifyContent: 'center'
                     }}
-                    inputProps={{
-                      min: 1,
-                      max: 9999,
-                      style: { textAlign: 'center' }
+                    slotProps={{
+                      htmlInput: {
+                        maxLength: 4,
+                        style: { textAlign: 'center' }
+                      }
                     }}
                   />
                   <IconButton
